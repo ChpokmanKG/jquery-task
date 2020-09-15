@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "URW-Bold";
+  src: url('../media/fonts/URWForm-Bold.ttf');
+}
+
+@font-face {
+  font-family: "URW-Medium";
+  src: url('../media/fonts/URWFormCond-Medium.ttf');
+}
+
+@font-face {
+  font-family: "URW-Regular";
+  src: url('../media/fonts/URWFormCond-Regular.ttf');
+}

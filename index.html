@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/fonts.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <ul class="menu menu--sticky">
+        <div class="sidebar__logo-wrap">
+          <img class="sidebar__logo-img" src="./media/img/Group 59.png" alt="logo">
+          <p class="sidebar__logo-text">Yep!</p>
+        </div>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-clone menu__icon" aria-hidden="true"></i>
+            Dashboard
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-th-large menu__icon" aria-hidden="true"></i>
+            Widgets
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-comment-o menu__icon" aria-hidden="true"></i>
+            Inbox
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-th-large menu__icon" aria-hidden="true"></i>
+            Team
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link menu__link--active">
+            <i class="fa fa-user-o menu__icon" aria-hidden="true"></i>
+            Customers
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-heart-o menu__icon" aria-hidden="true"></i>
+            Team
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-line-chart menu__icon" aria-hidden="true"></i>
+            Analysis
+          </a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">
+            <i class="fa fa-cog menu__icon" aria-hidden="true"></i>
+            Settgins
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <section class="content">
+      <header class="header">
+        <div class="header__select-overlay">
+          <i class="fa fa-bars header__sidebar-toggle" aria-hidden="true"></i>
+          <select class="header__select">
+            <option class="header__option" value="landmark store">landmark store</option>
+          </select>
+          <i class="fa fa-chevron-down header__caret" aria-hidden="true"></i>
+        </div>
+        <div class="header__notification-wrap">
+          <i class="fa fa-bell-o header__notification header__notification--with-new" aria-hidden="true"></i>
+          <div class="user-avatar" style="background-image: url(https://tinyfac.es/data/avatars/282A12CA-E0D7-4011-8BDD-1FAFAAB035F7-200w.jpeg);"></div>
+        </div>
+      </header>
+
+      <div class="content__body">
+        
+        <div class="content-filter-wrap">
+          <div class="content-filter-wrap__title-wrap">
+            <p class="content-filter-wrap__title">Customer</p>
+            <p class="content-filter-wrap__count">(136)</p>
+          </div>
+          <div class="content-filter-wrap__filter">
+
+            <div class="content-filter-wrap__input-wrap">
+              <i class="fa fa-search content-filter-wrap__input-icon" aria-hidden="true"></i>
+              <input type="text" id="search" class="content-filter-wrap__input" placeholder="Search">
+            </div>
+            
+            <div class="content-filter-wrap__select-overlay">
+              <select class="content-filter-wrap__select" id="status-change">
+                <option value="all customers">all customers</option>
+              </select>
+              <i class="fa fa-chevron-down content-filter-wrap__select-caret" aria-hidden="true"></i>
+            </div>
+            
+            <button class="content-filter-wrap__add-button">
+              +
+            </button>
+          
+          </div>
+        </div>
+
+        <table class="table">
+          <thead class="table__header">
+            <tr class="table__row">
+              <td class="table__cell table__header-cell">Customer Name</td>
+              <td class="table__cell table__header-cell">Email</td>
+              <td class="table__cell table__header-cell">Phone</td>
+              <td class="table__cell table__header-cell">Address</td>
+              <td class="table__cell table__header-cell">Status</td>
+              <td class="table__cell table__header-cell"></td>
+            </tr>
+          </thead>
+          <tbody class="table__body" id="table-body">
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <script src="./scripts/jq.js"></script>
+  <script src="./scripts/jqdebounce.js"></script>
+  <script>
+    $(document).ready(() => {
+
+      const createTableRow = ({name,email,id}) => $(`
+          <tr class="table__row" id="${id}">
+              <td aria-label="Customer Name" class="table__cell">
+                <div class="table__cell-flex">
+                  <div class="user-avatar"></div>
+                  <p class="table__text table__username">${name}</p>
+                </div>
+              </td>
+              <td aria-label="Email" class="table__cell">
+                <div class="table__cell-flex">
+                  <p class="table__text">${email}</p>
+                </div>
+              </td>
+              <td aria-label="Phone" class="table__cell">
+                <div class="table__cell-flex">
+                  <p class="table__text">Loading</p>
+                </div>
+              </td>
+              <td aria-label="Address" class="table__cell table__cell--flex">
+                <div class="table__cell-flex">
+                  <p class="table__text">Loading</p>
+                </div>
+              </td>
+              <td aria-label="Status" class="table__cell table__cell--flex">
+                <div class="table__cell-flex">
+                  <p class="table__text">Loading</p>
+                </div>
+              </td>
+              <td aria-label="Actions" class="table__cell">
+                <div class="clickable-dots"></div>
+              </td>
+            </tr>
+      `)
+
+
+      const changeObjectKey = ({old_key,new_key,obj}) => {
+        if(old_key !== new_key && obj[old_key]) {
+          Object.defineProperty(obj,new_key,
+            Object.getOwnPropertyDescriptor(obj,old_key));
+          delete obj[old_key];
+        }
+      }
+
+      const search = (value) => {
+        $('#table-body').children().each((idx,item) => {
+          let found = false;
+          $(item).find('[aria-label="Customer Name"] p.table__username').each((index,string) => {
+            if($(string).text().toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) >= 0) {
+              found = true;
+            }
+          });
+          found ? $(item).show() : $(item).hide();
+        })
+      }
+
+      const changeParagraphText = ({element,label,text}) => {
+        element.find(`[aria-label="${label}"] p.table__text`).text(text);
+      }
+
+      const getUsersAvatarImages = () => {
+        $.ajax({
+          url: 'https://tinyfac.es/api/users',
+          dataType: 'json',
+          success: json => {
+            const elements = $('#table-body').children();
+            elements.each((idx,item) => {
+              $(item).find('[aria-label="Customer Name"] div.user-avatar').css({backgroundImage: `url(${json[idx].avatars[0].url})`})
+            })
+          }
+        });
+      }
+
+      const usersStatus = () => {
+        $.ajax({
+          url: 'https://my-json-server.typicode.com/ka245/fake-json/status',
+          dataType: 'json',
+          success: json => {
+            const elements = $('#table-body').children();
+            const select = new Set();
+            $(json).each((idx,item) => {
+              changeParagraphText({element: $(elements[idx]), label: "Status", text: item.status});
+              select.add(item.status);
+            });
+            select.forEach(item => $('#status-change').append($(`<option value="${item}">${item}</option>`)));
+            getUsersAvatarImages();
+          }
+        })
+      }
+
+      const getPhoneAndAddress = () => {
+        $.ajax({
+          url: 'https://my-json-server.typicode.com/ka245/fake-json/address',
+          dataType: 'json',
+          success: json => {
+            const elements = $('#table-body').children();
+            const mapJson = $(json).each((index,item) => changeObjectKey({old_key: "iuserId",new_key: "userId", obj: item}));
+            const sortedJson = mapJson.sort((a,b) => parseInt(a.userId) - parseInt(b.userId))
+            $(sortedJson).each((index,object) => {
+              changeParagraphText({element: $(elements[index]), label: "Phone", text: object.phone});
+              changeParagraphText({element: $(elements[index]), label: "Address", text: object.address.street})
+            });
+            usersStatus();
+          }
+        })
+      }
+
+      $.ajax({
+        url: 'https://my-json-server.typicode.com/ka245/fake-json/users',
+        dataType: 'json',
+        success: (json) => {
+          const elements = [];
+          $(json).each((idx,{email,id,name}) => elements.push(createTableRow({email,id,name})));
+          $('#table-body').append(elements);
+          getPhoneAndAddress();
+        }
+      });
+
+      $('#status-change').on('change',e => {
+        if(e.target.value.toLowerCase() === 'all customers') {
+          $('#table-body').children().show()
+        }else {
+          $('#table-body').children().each((idx,item) => {
+            $(item).find(`[aria-label="Status"] p.table__text`)
+              .text()
+              .toLocaleLowerCase() !== e.target.value.toLocaleLowerCase() ? $(item).hide() : $(item).show();
+          })
+        }
+      })
+
+
+      $("#search").keyup($.debounce(200, e => {
+        search(e.target.value);
+      }));
+
+
+      $('.header__sidebar-toggle').on('click', () => {
+        $('.sidebar').addClass('sidebar--open');
+      });
+      
+      $(document).mouseup(e => {
+        const sidebar = $('.sidebar');
+        if(!sidebar.is(e.target) && sidebar.has(e.target).length === 0) {
+          sidebar.removeClass('sidebar--open');
+        }
+      });
+
+    });
+  </script>
+</body>
+
+</html>
